@@ -1,12 +1,15 @@
 export type Erc1155Token = {
+    id: string, 
     uri: string,
-    totalSupply: number,
-	account: string,
-	value: number,
-	valueExact: number
+    totalSupply?: number,
+	account?: string,
+	value?: number,
+	valueExact?: number
 }
 
 export type TokenDetail = {
+    id: string,
+    identifier: number,
     decimalPlaces: number,
     description: string,
     image: string, 
