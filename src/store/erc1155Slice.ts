@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { HttpGet } from "../services/Fetch";
-import { TokenDetail } from '../erc/'
+import { Erc1155Token, TokenDetail } from '../erc/'
 
 export type erc1155Token = {
     id: string,
@@ -25,9 +25,11 @@ type TokenState = {
 
 export const fetchErc115Token = createAsyncThunk(
     'erc115/fetch',
-    async (uri:string)=>{
-        let token = await HttpGet<TokenDetail>(uri);
-        return token;
+    async (token:Erc1155Token)=>{
+        let t = await HttpGet<TokenDetail>(token.uri);
+        t.id = token.id
+        return t;
+
     }
 )
 

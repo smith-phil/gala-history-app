@@ -22,7 +22,8 @@ const AssetCard = (props: AssetCardProps) => {
 
     useEffect(() => {
         if (!loaded) {
-            dispatch(fetchErc115Token(props.token.uri))
+
+            dispatch(fetchErc115Token(props.token))
         }
     }, [loaded])
 
@@ -36,7 +37,8 @@ const AssetCard = (props: AssetCardProps) => {
             {loaded && (
                 <CardContent>
                     <CardImageContainer>
-                        <CardImage src={tokenDetail.image} alt={tokenDetail.name} />
+                        <CardImage src={tokenDetail.image} alt={tokenDetail.name}  />
+
                     </CardImageContainer>
                     <CardBody>
                         <CardTitle>{tokenDetail.name}</CardTitle>
@@ -112,7 +114,6 @@ const CardAmount = styled.h4({
 })
 
 const CardImageContainer = styled.div({
-    height: 220,
     position: 'relative',
     '::after': {
         content: '""',
@@ -129,7 +130,7 @@ const CardImage = styled.img({
     objectFit: 'cover',
     width: '100%',
     height: '100%',
-    filter: 'grayscale(60%)',
+    
 });
 
 const CardBody = styled.div({
@@ -147,7 +148,7 @@ const CardDescription = styled.div({
 
 const CardFooter = styled.div({
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
 });
 
 const CardDetails = styled.ul({

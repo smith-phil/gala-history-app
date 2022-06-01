@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
-import Header from './components/Header';
+import { Header } from './components/Header';
 import Container from './components/Container';
 import Footer from './components/Footer';
 import { gql, useQuery } from '@apollo/client';
@@ -30,7 +30,7 @@ function App() {
   return (
 <BrowserRouter>
 
-      <Header />
+      <Header title='Gala Games Token History' />
       
       <Container pageWidth={1100} flexDirection={'row'} justifyContent={'center'}>
       {data !== undefined && (

@@ -1,96 +1,111 @@
-import React, { ReactNode } from 'react';
-// import { colors, widths } from '../styles';
-import styled from '@emotion/styled';
-import { NavLink } from 'react-router-dom';
-import logo from '../assets/gala-logo.webp';
+import { alpha, AppBar, Box, styled, Toolbar, Typography, InputBase } from "@mui/material"
+import IconButton from '@mui/material/IconButton'
+import SearchIcon from '@mui/icons-material/Search'
+import { NavLink } from "react-router-dom"
+import { FormatAlignJustify } from "@mui/icons-material"
 
-
-type HeaderProps = {
-    children?:ReactNode[]
+interface HeaderProps {
+  title: string,
+  onAddressChanged:(address:string)=>void
 }
-/**
- * Header renders the top navigation
- * for this particular tutorial level, it only holds the home button
- */
-const Header = (props:HeaderProps) => {
+
+export const Header = (props: HeaderProps) => {
+  const marginLeft = 4
+  const boxSmall = { flexGrow: 1, gap: 2, display: { xs: 'flex', md: 'none' } }
+  const boxMedium = { flexGrow: 1, gap: 2, display: { xs: 'none', md: 'flex' } }
+  const headingSmall = { mr: 2, ml: marginLeft, p: 2, flexGrow: 1, display: { xs: 'flex', md: 'none' } }
+  const headingMedium = { mr: 2, ml: marginLeft, p: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }
+
+
+  const addressChanged = (e:React.FocusEvent<HTMLInputElement>) => {
+    let address = e.target.value
+    if(address !== undefined) {
+      props.onAddressChanged(address)
+    }
+  } 
+
   return (
-    <HeaderBar>
-      <Container>
-        <HomeButtonContainer>
-          <HomeLink to="/">
-            <HomeButton>
-              <LogoContainer>
-                <Logo src={logo} />
-              </LogoContainer>
-              <Title>
-                <h3>Gala Explorer</h3>
-                <div>Account explorer for Gala games</div>
-              </Title>
-            </HomeButton>
-          </HomeLink>
-        </HomeButtonContainer>
-        {props.children}
-      </Container>
-    </HeaderBar>
-  );
-};
+    <AppBar>
 
-export default Header;
+      <StyledNavWrapper>
+      <Toolbar disableGutters>
+        <Typography
+          variant='h2'
+          component='h1'
+          sx={headingSmall}>
+          {props.title}
+        </Typography>
+        <Typography
+          variant='h3'
+          component='h1'
+          sx={headingMedium}>
+          {props.title}
+        </Typography>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Enter an address ..."
+            inputProps={{ 'aria-label': 'search', maxLength:45 }}
+            onBlur={addressChanged}
+            
+          />
+        </Search>
+      </Toolbar>
+      </StyledNavWrapper>
+    </AppBar>
+  )
 
-/** Header styled components */
-const HeaderBar = styled.div({
+}
+
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}))
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
   display: 'flex',
-  flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-  borderBottom: `solid 1px pink`,
-  boxShadow: '0px 1px 5px 0px rgba(0,0,0,0.15)',
-  padding: '5px 30px',
-  minHeight: 80,
-  backgroundColor: 'white',
-});
+}))
 
-const Container = styled.div({
-  width: `1100px`,
-});
-
-const HomeLink = styled(NavLink)({
-  textDecoration: 'none',
-});
-
-const HomeButtonContainer = styled.div({
+const StyledNavWrapper = styled('div')(({ theme })=>({
   display: 'flex',
-  flex: 1,
-});
+  justifyContent: 'center',
+  alignItems: 'center'
+}))
 
-const HomeButton = styled.div({
-  display: 'flex',
-  flexDirection: 'row',
-  color: 'pink',
-  alignItems: 'center',
-  ':hover': {
-    color: 'pink',
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '43ch',
+      },
+    },
   },
-});
+}))
 
-const LogoContainer = styled.div({ display: 'flex', alignSelf: 'center' });
 
-const Logo = styled.img({
-  height: 60,
-  width: 60,
-  marginRight: 8,
-});
-
-const Title = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-  h3: {
-    lineHeight: '1em',
-    marginBottom: 0,
-  },
-  div: {
-    fontSize: '0.9em',
-    lineHeight: '0.8em',
-    paddingLeft: 2,
-  },
-});
