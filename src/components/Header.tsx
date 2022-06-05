@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import { NavLink } from "react-router-dom"
 import { FormatAlignJustify } from "@mui/icons-material"
+import React, { useState } from "react"
 
 interface HeaderProps {
   title: string,
@@ -16,13 +17,20 @@ export const Header = (props: HeaderProps) => {
   const headingSmall = { mr: 2, ml: marginLeft, p: 2, flexGrow: 1, display: { xs: 'flex', md: 'none' } }
   const headingMedium = { mr: 2, ml: marginLeft, p: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }
 
-
-  const addressChanged = (e:React.FocusEvent<HTMLInputElement>) => {
-    let address = e.target.value
+  const [address, setAddress] = useState<string | undefined>();
+  const addressChanged = () => {
     if(address !== undefined) {
       props.onAddressChanged(address)
     }
   } 
+
+  const onSubmit = (e:React.KeyboardEvent<HTMLInputElement>)=>{
+    if(e.key === 'Enter') {
+      if(address !== undefined) {
+        props.onAddressChanged(address)
+      }
+    }
+  }
 
   return (
     <AppBar>
@@ -49,7 +57,8 @@ export const Header = (props: HeaderProps) => {
             placeholder="Enter an address ..."
             inputProps={{ 'aria-label': 'search', maxLength:45 }}
             onBlur={addressChanged}
-            
+            onChange={(v)=>setAddress(v.target.value)}
+            onKeyUp={onSubmit}
           />
         </Search>
       </Toolbar>
