@@ -1,9 +1,11 @@
-import { alpha, AppBar, Box, styled, Toolbar, Typography, InputBase } from "@mui/material"
+import { alpha, AppBar, Box, styled, Toolbar, Typography, InputBase, Alert } from "@mui/material"
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import { NavLink } from "react-router-dom"
 import { FormatAlignJustify } from "@mui/icons-material"
 import React, { useState } from "react"
+import { utils } from 'ethers';
+import { ErrorAlert } from "./ErrorAlert"
 
 interface HeaderProps {
   title: string,
@@ -18,23 +20,35 @@ export const Header = (props: HeaderProps) => {
   const headingMedium = { mr: 2, ml: marginLeft, p: 2, flexGrow: 1, display: { xs: 'none', md: 'flex' } }
 
   const [address, setAddress] = useState<string | undefined>();
+  const [showError, setShowError] = useState(false);
+
+  const onChange = (value:string)=>{
+    setShowError(false);
+    setAddress(value);
+  }
   const addressChanged = () => {
-    if(address !== undefined) {
-      props.onAddressChanged(address)
+    if(address === undefined) {
+      return;
     }
+    try {
+      // Note: Checksum address to lower case as thegraph.com needs this
+      const newAddress  = utils.getAddress(address).toLowerCase()
+      props.onAddressChanged(newAddress); 
+    } catch (error) {
+      setShowError(true);
+      return
+    }
+    
   } 
 
   const onSubmit = (e:React.KeyboardEvent<HTMLInputElement>)=>{
     if(e.key === 'Enter') {
-      if(address !== undefined) {
-        props.onAddressChanged(address)
-      }
+      addressChanged();
     }
   }
 
   return (
     <AppBar>
-
       <StyledNavWrapper>
       <Toolbar disableGutters>
         <Typography
@@ -57,17 +71,24 @@ export const Header = (props: HeaderProps) => {
             placeholder="Enter an address ..."
             inputProps={{ 'aria-label': 'search', maxLength:45 }}
             onBlur={addressChanged}
-            onChange={(v)=>setAddress(v.target.value)}
+            onChange={(v)=>onChange(v.target.value)}
             onKeyUp={onSubmit}
           />
         </Search>
       </Toolbar>
       </StyledNavWrapper>
+      {showError && (
+        <AlertWrapper>
+          <ErrorAlert message="Address is invalid" onClose={()=>setShowError(false)} />
+          </AlertWrapper>
+        )}
     </AppBar>
   )
-
 }
 
+const AlertWrapper = styled('div')(({ theme }) => ({
+  position:'relative'
+}))
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -109,7 +130,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: '12ch',
+      width: '21ch',
       '&:focus': {
         width: '43ch',
       },
