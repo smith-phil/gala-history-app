@@ -32,20 +32,14 @@ function App() {
   
   const onAddressChanged = (address:string)=>{
     setShowLoading(true);
-    console.log(`address changed to ${address}`)
     getTokens({variables: { address }})
   }
 
   useEffect(()=> {
-    console.log(`loading is ${loading} called is ${called}`)
     if(called && !loading) {
       setShowLoading(false)
     }
   }, [loading, called])
-
-  useEffect(()=>{
-    console.log(`showLoading is ${showLoading}`)
-  }, [showLoading])
 
   return (
     <BrowserRouter>
