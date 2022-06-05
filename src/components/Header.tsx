@@ -24,7 +24,7 @@ export const Header = (props: HeaderProps) => {
 
   const onChange = (value:string)=>{
     setShowError(false);
-    setAddress(value);
+    setAddress(value.toLowerCase());
   }
   const addressChanged = () => {
     if(address === undefined) {
