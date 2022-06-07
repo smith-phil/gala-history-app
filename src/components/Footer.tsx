@@ -18,7 +18,7 @@ const Footer = (props: FooterProps) => {
       <FooterContent>
         <div>Gala Games content © 2021 <Link href='https://app.gala.games' color='inherit' underline='hover'>Gala Games</Link></div>
         <div><Link href='tandc.html' color='inherit' underline='hover'>Terms and Conditions</Link></div>
-        <div><GitHubIcon fontSize='inherit' />&nbsp;<Link href="https://github.com/smith-phil/gala-wallet-app" color='inherit' underline='hover'>Source Code</Link> </div>
+        <div><GitHubIcon fontSize='inherit' />&nbsp;<Link href="https://github.com/smith-phil/gala-history-app" color='inherit' underline='hover'>Source Code</Link> </div>
       </FooterContent>
     </footer>
   );
