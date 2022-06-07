@@ -38,8 +38,13 @@ function App() {
   useEffect(()=> {
     if(called && !loading) {
       setShowLoading(false)
+      
     }
   }, [loading, called])
+
+  useEffect(()=>{
+    console.info(`data is`, data);
+  }, [data])
 
   return (
     <BrowserRouter>
@@ -55,11 +60,23 @@ function App() {
           {showLoading && (
             <CircularProgress />
           )}
-          {data !== undefined && (
+          {data !== undefined &&  data.account.ERC1155balances.length > 0 && (
             data.account.ERC1155balances?.map((balance: Erc1155Balance, i: number) => (
               <AssetCard key={i.toString()} token={balance.token} valueExact={balance.valueExact} />
             )
           ))}
+          {data !== undefined && data.account.ERC1155balances.length <= 0 && (
+            <div>
+            <h2>No Assets found</h2>
+            <p>This account appears to not own any gala game assets</p>
+            </div>
+          )}
+          {data === undefined && !called && !loading && (
+                        <div>
+                        <p>Please enter an address above</p>
+                        </div>
+          )}
+
         </Container>
       </Box>
       <Footer />
