@@ -42,10 +42,6 @@ function App() {
     }
   }, [loading, called])
 
-  useEffect(()=>{
-    console.info(`data is`, data);
-  }, [data])
-
   return (
     <BrowserRouter>
 
@@ -72,9 +68,9 @@ function App() {
             </div>
           )}
           {data === undefined && !called && !loading && (
-                        <div>
-                        <p>Please enter an address above</p>
-                        </div>
+            <div>
+            <p>Please enter an address above</p>
+            </div>
           )}
 
         </Container>
