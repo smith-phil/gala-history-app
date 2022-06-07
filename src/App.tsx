@@ -50,7 +50,8 @@ function App() {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh"
+        minHeight="90vh"
+        paddingTop={'100px'}
       >
         <Container pageWidth={1100} flexDirection={'row'} justifyContent={'center'}>
           {showLoading && (
