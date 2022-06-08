@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 );
 
 const client = new ApolloClient({
-  uri: 'https://api.studio.thegraph.com/query/3051/gala-subgraph/v0.0.21',
+  uri: 'https://api.thegraph.com/subgraphs/name/smith-phil/galasubgraph',
   cache: new InMemoryCache()
 });
 
