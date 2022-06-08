@@ -14,7 +14,7 @@ type FooterProps = {
 const Footer = (props: FooterProps) => {
   return (
     <footer style={{ width: '100%', height: '70px', paddingTop: '10px', paddingBottom: '10px', backgroundColor: '#1976d2', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ margin: 'auto', color: '#fff', lineHeight: '1vh' }}>Galawallet.info is an unofficial site and has no connection to or affiliation with Gala Games</div>
+      <div style={{ margin: 'auto', color: '#fff', lineHeight: '1vh' }}>Galawallet.io is an unofficial site and has no connection to or affiliation with Gala Games</div>
       <FooterContent>
         <div>Gala Games content © 2021 <Link href='https://app.gala.games' color='inherit' underline='hover'>Gala Games</Link></div>
         <div><Link href='tandc.html' color='inherit' underline='hover'>Terms and Conditions</Link></div>
